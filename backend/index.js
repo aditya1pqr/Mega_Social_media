@@ -1,10 +1,17 @@
-import express from "express"
+import express, { urlencoded } from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv"
+import  connectDB from "./utils/db.js"
+dotenv.config({});
+
+const PORT = process.env.PORT || 3000
+
+
 
 
 const app =  express();
-const PORT = 8000;
+
 
 app.get('/',(req,res)=>{
    
@@ -15,15 +22,15 @@ app.get('/',(req,res)=>{
 })
 const corsOptions = {
     origin: "http://localhost:5173",
-    Credential:true
+    credentials:true
 }
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
-
+app.use(urlencoded({extended:true}))
 
 app.listen(PORT,()=>{
-
+ connectDB();
     console.log(`server is listen at port ${PORT}`);
 
 })
